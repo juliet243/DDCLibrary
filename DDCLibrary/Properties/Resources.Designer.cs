@@ -183,6 +183,16 @@ namespace DDCLibrary.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap helpdata {
+            get {
+                object obj = ResourceManager.GetObject("helpdata", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap helpicon6__1_ {
             get {
                 object obj = ResourceManager.GetObject("helpicon6 (1)", resourceCulture);
@@ -336,6 +346,16 @@ namespace DDCLibrary.Properties {
         internal static System.Drawing.Bitmap stop__1_ {
             get {
                 object obj = ResourceManager.GetObject("stop (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap treebark {
+            get {
+                object obj = ResourceManager.GetObject("treebark", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

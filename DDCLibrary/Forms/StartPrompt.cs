@@ -16,13 +16,24 @@ namespace DDCLibrary
         private LinkedListNode<PictureBox> currentPictureBoxNode; // Node pointing to the currently visible picture box
         private Timer timer; // Timer for controlling the picture change interval
 
+        public List<string> checkForScreen;
+
+        public StartPrompt()
+        {
+            InitializeComponent();
+        }
+
+
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Default constructor
         /// </summary>
-        public StartPrompt()
+        public StartPrompt(List<string> checkForScreen)
         {
             InitializeComponent();
+
+            //
+            this.checkForScreen = checkForScreen;
 
             // Enablling buffering to stop image flickering
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
@@ -107,11 +118,25 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            // Create an instance of Form2
-            ReplacBooks form2 = new ReplacBooks();
-            // Show Form2 and hide Form1
-            form2.Show();
-            this.Hide();
+
+            if (checkForScreen[0].Equals("IdentifyAreas"))
+            {
+                // Create an instance of Form2
+                IdentifyAreas form2 = new IdentifyAreas();
+                // Show Form2 and hide Form1
+                this.Hide();
+                form2.Show();
+                this.Hide();
+            }
+            else if (checkForScreen[0].Equals("ReplaceBooks"))
+            {
+                // Create an instance of Form2
+                ReplacBooks form2 = new ReplacBooks();
+                // Show Form2 and hide Form1
+                this.Hide();
+                form2.Show();
+                this.Hide();
+            }
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }

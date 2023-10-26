@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DDCLibrary
@@ -11,6 +12,8 @@ namespace DDCLibrary
         private bool btnReplacBksEnabled = false; 
         private bool btnIdnftyArsEnabled = false;
         private bool btnFndCalNmbrsEnabled = false;
+
+        public List<string> checkForScreen = new List<string>();
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -38,13 +41,23 @@ namespace DDCLibrary
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
-        /// Button that takes users to Identify books section of the application. currently inactive
+        /// Button that takes users to Identify books section of the application. Now set to active.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnIdnftyArs_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Level Locked.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show("Level Locked.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Create an instance of Form2
+            //  int checkForScreen = 1;
+            checkForScreen.Add("IdentifyAreas");
+              StartPrompt form2 = new StartPrompt(checkForScreen);
+            // Show Form2 and hide Form1
+            form2.Show();
+            this.Hide();
+
+
+
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -57,6 +70,7 @@ namespace DDCLibrary
         private void btnFndCalNmbrs_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Level Locked.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -68,8 +82,9 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void btnReplacBks_Click(object sender, EventArgs e)
         {
+            checkForScreen.Add("ReplaceBooks");
             // Create an instance of Form2
-            StartPrompt form2 = new StartPrompt();
+            StartPrompt form2 = new StartPrompt(checkForScreen);
             // Show Form2 and hide Form1
             form2.Show();
             this.Hide();

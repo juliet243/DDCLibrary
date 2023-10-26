@@ -38,8 +38,8 @@ namespace DDCLibrary
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
             //Using class library 'Algorithms' to nitilising the random gen numbers and letters so they load as soon as the form is up
-            randomGenNmbrs = al.GenerateCallNumbers();
-            randonGenLetters = al.GenerateRandomLetterSets(10, 3);
+            randomGenNmbrs = al.GenerateCallNumbers(10);
+            randonGenLetters = al.GenerateRandomLetterSets(7, 3);
 
 
             //btnBk1.Text = "AB  C 814";
@@ -99,6 +99,10 @@ namespace DDCLibrary
                 // Show Form2 and hide Form1
                 form2.Show();
                 this.Hide();
+                if (this.Parent != null)
+                {
+                    this.Parent.Controls.Remove(this);
+                }
             }
             
         }

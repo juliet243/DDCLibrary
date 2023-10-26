@@ -73,7 +73,7 @@
             // 
             // btnIdnftyArs
             // 
-            this.btnIdnftyArs.BackgroundImage = global::DDCLibrary.Properties.Resources.personreadingbw1;
+            this.btnIdnftyArs.BackgroundImage = global::DDCLibrary.Properties.Resources.personreading;
             this.btnIdnftyArs.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnIdnftyArs.Enabled = false;
             this.btnIdnftyArs.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
