@@ -193,12 +193,22 @@ namespace DDCLibrary
             }
             else
             {
-                if (IsFormat2Active()) //checks if user if user selected to switch formats -they will be askedd to match identifications to call numbers
+                if (IsFormat2Active()) // Checks if the user has selected to switch formats - they will be asked to match identifications to call numbers
                 {
                     string callNumber1 = clickedButton.Text;
                     string identification2 = prevClickedButton.Text;
+                    bool matchFound = false;
 
-                    if (deweyData.ContainsKey(callNumber1) && deweyData[callNumber1] == identification2)
+                    foreach (var pair in deweyData)
+                    {
+                        if (pair.Value == identification2 && pair.Key == callNumber1)
+                        {
+                            matchFound = true;
+                            break;
+                        }
+                    }
+
+                    if (matchFound)
                     {
                         MessageBox.Show("Correct Match");
                         prevClickedButton.BackColor = Color.Green;
@@ -209,10 +219,12 @@ namespace DDCLibrary
                         prevClickedButton.BackColor = Color.White;
                         clickedButton.BackColor = Color.White;
                         FailedAttempts();
-
                     }
-                    prevClickedButton = null; //setting bbuttons to null values
+
+                    prevClickedButton = null; // Setting buttons to null values
                 }
+
+
                 else //regulary format of checking call numbers to identifications
                 {
                     string callNumber = prevClickedButton.Text;
@@ -245,6 +257,7 @@ namespace DDCLibrary
         /// </summary>
         public void SecondFormat()
         {
+            //btnCol3.Visible = true;
             //Setting gamification feature to ensure all setting are reverted to original
             failedAttempts = 0;
             lifeIcon1.Visible = true;
@@ -257,6 +270,7 @@ namespace DDCLibrary
             List<string> callNumbers = deweyData.Keys.ToList(); //adding dewey data to string list
             List<string> identifications = deweyData.Values.ToList(); //adding dewey data to string list
             Random random = new Random(); //Random class that will help with randomly displaying data
+            //btnCol3.Visible = false;
 
             //Buttons lists of type buttons to store possible clicked buttons
             List<Button> buttons = new List<Button> { btnCol4, btnCol5, btnCol6, btnCol7};
@@ -317,8 +331,9 @@ namespace DDCLibrary
         /// <returns></returns>
         private bool IsFormat2Active()
         {
+          //  btnCol3.Visible = false;
             // Define the condition for Format2 to be active (e.g., based on button visibility, etc.)
-            return btnCol3.Visible;
+            return lblCol1.Text =="IDENTIFICATIONS";
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -363,6 +378,7 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void lblReset_Click(object sender, EventArgs e)
         {
+           // btnCol3.Visible = true;
             SecondFormat();
             lblReset.Visible = false;
         }
