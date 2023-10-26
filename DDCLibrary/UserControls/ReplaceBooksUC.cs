@@ -38,8 +38,8 @@ namespace DDCLibrary
             SetStyle(ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
             //Using class library 'Algorithms' to nitilising the random gen numbers and letters so they load as soon as the form is up
-            randomGenNmbrs = al.GenerateCallNumbers(10);
-            randonGenLetters = al.GenerateRandomLetterSets(7, 3);
+            randomGenNmbrs = al.GenerateCallNumbers();
+            randonGenLetters = al.GenerateRandomLetterSets(10, 3);
 
 
             //btnBk1.Text = "AB  C 814";

@@ -46,11 +46,11 @@ namespace Algorithms
         /// </summary>
         /// <returns></returns>
         //Method and algorithm that will randomly generate numbers
-        public LinkedList<int> GenerateCallNumbers(int numberOfCallNumbers)
+        public LinkedList<int> GenerateCallNumbers()
         {
             LinkedList<int> callNumbers = new LinkedList<int>(); //linked list to store random numbers
             Random random = new Random(); //Help with the genration of random nmbrs
-            while (callNumbers.Count < numberOfCallNumbers)
+            while (callNumbers.Count < 10)
             {
                 int callNumber = random.Next(100, 1000); // Generate a random number between 100 and 999
 
