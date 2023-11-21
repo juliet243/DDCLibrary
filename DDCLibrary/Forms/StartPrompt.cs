@@ -62,17 +62,24 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void tmr2_Tick(object sender, EventArgs e)
         {
-            // Hide all picture boxes
-            foreach (var pictureBox in pictureBoxes)
+            // Ensure pictureBoxes is not null before using it
+            if (pictureBoxes != null)
             {
-                pictureBox.Visible = false;
+                // Hide all picture boxes
+                foreach (var pictureBox in pictureBoxes)
+                {
+                    pictureBox.Visible = false;
+                }
+
+                // Show the picture box pointed to by currentPictureBoxNode
+                currentPictureBoxNode.Value.Visible = true;
+
+                // Move to the next picture box node and loop back to the first if necessary
+                currentPictureBoxNode = currentPictureBoxNode.Next ?? pictureBoxes.First;
             }
-
-            // Show the picture box pointed to by currentPictureBoxNode
-            currentPictureBoxNode.Value.Visible = true;
-
-            // Move to the next picture box node and loop back to the first if necessary
-            currentPictureBoxNode = currentPictureBoxNode.Next ?? pictureBoxes.First;
+            else
+            {
+            }
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -132,6 +139,15 @@ namespace DDCLibrary
             {
                 // Create an instance of Form2
                 ReplacBooks form2 = new ReplacBooks();
+                // Show Form2 and hide Form1
+                this.Hide();
+                form2.Show();
+                this.Hide();
+            }
+            else if (checkForScreen[0].Equals("FindCallNumbers"))
+            {
+                // Create an instance of Form2
+                FindCallNumbers form2 = new FindCallNumbers();
                 // Show Form2 and hide Form1
                 this.Hide();
                 form2.Show();

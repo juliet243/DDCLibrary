@@ -125,11 +125,12 @@ namespace DDCLibrary
         /// <param name="result"></param>
         public void PromptNewGame(DialogResult result)
         {
-             
-                if (result == DialogResult.OK)
+            List<string> checkForScreen = new List<string>();
+            if (result == DialogResult.OK)
                 {
-                    // Create an instance of Form2
-                    StartPrompt form2 = new StartPrompt();
+                  checkForScreen.Add("ReplaceBooks");
+                // Create an instance of Form2
+                StartPrompt form2 = new StartPrompt(checkForScreen);
                     // Show Form2 and hide Form1
                     form2.Show();
                     // this.Hide();

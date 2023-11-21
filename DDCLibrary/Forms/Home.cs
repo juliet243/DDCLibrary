@@ -69,7 +69,12 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void btnFndCalNmbrs_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Level Locked.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            checkForScreen.Add("FindCallNumbers");
+            // Create an instance of Form2
+            StartPrompt form2 = new StartPrompt(checkForScreen);
+            // Show Form2 and hide Form1
+            form2.Show();
+            this.Hide();
 
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

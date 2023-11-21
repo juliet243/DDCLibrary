@@ -138,7 +138,6 @@ namespace DDCLibrary
             numberEnumerator.Dispose();
             letterEnumerator.Dispose();
         }
-
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -150,32 +149,58 @@ namespace DDCLibrary
         /// <param name="e"></param>
         private void btnStop_Click(object sender, EventArgs e)
         {
-            DisableBookMovement(); // Calling this method to disable book movement to prevent the user from changing order of books after pressing stop
-            GrabBookCallNumber(); //Calling the mthod that removes letters from call numbers before sorting algorithm 
+            DisableBookMovement();
+            GrabBookCallNumber();
 
-            //bubblesort algorithm to check if the buttons have been sorted in ascending order
-            Button temp; //Will keep track of the current button as checking of placements occurs
+            // Bubblesort algorithm to check if the buttons have been sorted in ascending order
+            Button temp;
+
             for (int i = 0; i <= booksToOrder.Count - 2; i++)
             {
                 for (int j = 0; j <= booksToOrder.Count - 2; j++)
                 {
-                    String t1 = booksToOrder[j].Text;
-                    String t2 = booksToOrder[j + 1].Text;
-
-                    int temp1 = Int32.Parse(t1.Substring(0, 3)); //will track the current int value to compare to the next
-                    int temp2 = Int32.Parse(t2.Substring(0, 3)); //comparision int value
-
-                    if (temp1 > temp2) //if temprorary 1 is bigger than temporary2
-                    {
-                        temp = booksToOrder[j + 1];
-                        booksToOrder[j + 1] = booksToOrder[j];
-                        booksToOrder[j] = temp;
-                    }
+                    CompareAndSwapButtons(j);
                 }
             }
-            //this will call the sorting algorithm inside the worker class
+
+            // Call the sorting algorithm inside the worker class
             worker.SortUsingBubbleSort(booksToOrder, panel1, lifeIcon3, lifeIcon2, lifeIcon1);
         }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Comparing and swapping buttons action
+        /// </summary>
+        /// <param name="j"></param>
+        private void CompareAndSwapButtons(int j)
+        {
+            String t1 = booksToOrder[j].Text;
+            String t2 = booksToOrder[j + 1].Text;
+
+            int temp1 = Int32.Parse(t1.Substring(0, 3));
+            int temp2 = Int32.Parse(t2.Substring(0, 3));
+
+            if (temp1 > temp2)
+            {
+                SwapButtons(j);
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Swap buttons action
+        /// </summary>
+        /// <param name="j"></param>
+        private void SwapButtons(int j)
+        {
+            Button temp = booksToOrder[j + 1];
+            booksToOrder[j + 1] = booksToOrder[j];
+            booksToOrder[j] = temp;
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Method to rmeove the letters from the button texts before the sorting algorithm checks if they have been ordered correctly

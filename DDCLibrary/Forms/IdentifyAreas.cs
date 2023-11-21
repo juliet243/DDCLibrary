@@ -33,9 +33,7 @@ namespace DDCLibrary
             
             PopulateDictionary(); //populating the dictionary 
             InitializeButtonsFormat1(); //inititalising the data in the buttons
-            AttachButtonClickHandlers(); //attaching click event listeners to the buttons
-
-            
+            AttachButtonClickHandlers(); //attaching click event listeners to the buttons   
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,6 +62,7 @@ namespace DDCLibrary
         /// </summary>
         private void InitializeButtonsFormat1()
         {
+            
             lblReset.Visible = true;
         
         //making sure feature is set back to zero should method be called again
@@ -109,7 +108,7 @@ namespace DDCLibrary
             {
                 if (callNumbers.Count > 0)
                 {
-                    int randomIndex = random.Next(callNumbers.Count);
+                    var randomIndex = random.Next(callNumbers.Count);
                     string randomCallNumber = callNumbers[randomIndex];
                     button.Text = randomCallNumber;
                     callNumbers.RemoveAt(randomIndex); // Avoid duplicate call numbers
@@ -126,7 +125,7 @@ namespace DDCLibrary
             {
                 if (identifications.Count > 0)
                 {
-                    int randomIndex = random.Next(identifications.Count);
+                    var randomIndex = random.Next(identifications.Count);
                     string randomIdentification = identifications[randomIndex];
                     button.Text = randomIdentification;
                     identifications.RemoveAt(randomIndex); // Avoid duplicate identifications
@@ -185,71 +184,92 @@ namespace DDCLibrary
         private void Button_Click(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
-            clickedButton.BackColor = Color.Blue; //change colour of clicked button to show its clicked
-            if (prevClickedButton == null) //checking if prev selected button is null
+            clickedButton.BackColor = Color.Blue;
+
+            if (prevClickedButton == null)
             {
                 // First button in the sequence
                 prevClickedButton = clickedButton;
+                return;
+            }
+
+            if (IsFormat2Active())
+            {
+                HandleFormat2Click(clickedButton);
             }
             else
             {
-                if (IsFormat2Active()) // Checks if the user has selected to switch formats - they will be asked to match identifications to call numbers
-                {
-                    string callNumber1 = clickedButton.Text;
-                    string identification2 = prevClickedButton.Text;
-                    bool matchFound = false;
-
-                    foreach (var pair in deweyData)
-                    {
-                        if (pair.Value == identification2 && pair.Key == callNumber1)
-                        {
-                            matchFound = true;
-                            break;
-                        }
-                    }
-
-                    if (matchFound)
-                    {
-                        MessageBox.Show("Correct Match");
-                        prevClickedButton.BackColor = Color.Green;
-                        clickedButton.BackColor = Color.Green;
-                    }
-                    else
-                    {
-                        prevClickedButton.BackColor = Color.White;
-                        clickedButton.BackColor = Color.White;
-                        FailedAttempts();
-                    }
-
-                    prevClickedButton = null; // Setting buttons to null values
-                }
-
-
-                else //regulary format of checking call numbers to identifications
-                {
-                    string callNumber = prevClickedButton.Text;
-                    string identification = clickedButton.Text;
-
-                    if (deweyData.ContainsKey(callNumber) && deweyData[callNumber] == identification)
-                    {
-                        MessageBox.Show("Correct Match");
-                        prevClickedButton.BackColor = Color.Green;
-                        clickedButton.BackColor = Color.Green;
-                    }
-                    else
-                    {
-                        prevClickedButton.BackColor = Color.White;
-                        clickedButton.BackColor = Color.White;
-                        FailedAttempts();
-                    }
-
-                    prevClickedButton = null; // Reset the previous clicked button
-                    
-                }
+                HandleRegularClick(clickedButton);
             }
+
+            prevClickedButton = null; // Reset the previous clicked button
         }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clickedButton"></param>
+        private void HandleFormat2Click(Button clickedButton)
+        {
+            string callNumber1 = clickedButton.Text;
+            string identification2 = prevClickedButton.Text;
+
+            bool matchFound = deweyData.Any(pair => pair.Value == identification2 && pair.Key == callNumber1);
+
+            if (matchFound)
+            {
+                MessageBox.Show("Correct Match");
+                SetButtonColors(prevClickedButton, clickedButton, Color.Green);
+            }
+            else
+            {
+                SetButtonColors(prevClickedButton, clickedButton, Color.White);
+                FailedAttempts();
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clickedButton"></param>
+        private void HandleRegularClick(Button clickedButton)
+        {
+            string callNumber = prevClickedButton.Text;
+            string identification = clickedButton.Text;
+
+            bool matchFound = deweyData.ContainsKey(callNumber) && deweyData[callNumber] == identification;
+
+            if (matchFound)
+            {
+                MessageBox.Show("Correct Match");
+                SetButtonColors(prevClickedButton, clickedButton, Color.Green);
+            }
+            else
+            {
+                SetButtonColors(prevClickedButton, clickedButton, Color.White);
+                FailedAttempts();
+            }
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="button1"></param>
+        /// <param name="button2"></param>
+        /// <param name="color"></param>
+        private void SetButtonColors(Button button1, Button button2, Color color)
+        {
+            button1.BackColor = color;
+            button2.BackColor = color;
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -258,71 +278,78 @@ namespace DDCLibrary
         public void SecondFormat()
         {
             //btnCol3.Visible = true;
-            //Setting gamification feature to ensure all setting are reverted to original
+            //Setting gamification feature to ensure all settings are reverted to the original
+            ResetGameSettings();
+
+            lblCol1.Text = "IDENTIFICATIONS"; //changing the label from call number
+            lblCol2.Text = "CALL NUMBERS"; //changing the label from identifications
+
+            List<string> callNumbers = deweyData.Keys.ToList();
+            List<string> identifications = deweyData.Values.ToList();
+            Random random = new Random();
+
+            List<Button> buttons = new List<Button> { btnCol4, btnCol5, btnCol6, btnCol7 };
+            List<Button> buttons1 = new List<Button> { btnCol33, btnCol44, btnCol55, btnCol66, btnCol77, btnCol88, btnCol99 };
+
+            ResetButtonColors(buttons);
+            ResetButtonColors(buttons1);
+
+            AssignRandomDataToButtons(buttons1, callNumbers, random, "No Data");
+            AssignRandomDataToButtons(buttons, identifications, random, "No Data");
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Life Icon data
+        /// </summary>
+        private void ResetGameSettings()
+        {
             failedAttempts = 0;
             lifeIcon1.Visible = true;
             lifeIcon2.Visible = true;
             lifeIcon3.Visible = true;
-
-            lblCol1.Text = "IDENTIFICATIONS"; //changing the lable from call number
-            lblCol2.Text = "CALL NUMBERS"; //changing the lable from identifications
-
-            List<string> callNumbers = deweyData.Keys.ToList(); //adding dewey data to string list
-            List<string> identifications = deweyData.Values.ToList(); //adding dewey data to string list
-            Random random = new Random(); //Random class that will help with randomly displaying data
-            //btnCol3.Visible = false;
-
-            //Buttons lists of type buttons to store possible clicked buttons
-            List<Button> buttons = new List<Button> { btnCol4, btnCol5, btnCol6, btnCol7};
-            List<Button> buttons1 = new List<Button> { btnCol33, btnCol44, btnCol55, btnCol66, btnCol77, btnCol88, btnCol99 };
-
-            // Revert the original button colors
-            foreach (Button button in buttons)
-            {
-                button.BackColor = SystemColors.Control; // Set the background color to the default control color
-            }
-
-            foreach (Button button in buttons1)
-            {
-                button.BackColor = SystemColors.Control; // Set the background color to the default control color
-            }
-
-
-           //randomly assigning data in dictionary to button texts
-            foreach (Button button in buttons1)
-            {
-                if (callNumbers.Count > 0)
-                {
-                    int randomIndex = random.Next(callNumbers.Count);
-                    string randomCallNumber = callNumbers[randomIndex];
-                    button.Text = randomCallNumber;
-                    callNumbers.RemoveAt(randomIndex); // Avoid duplicate call numbers
-                }
-                else
-                {
-                    // Handle the case where there are not enough call numbers
-                    button.Text = "No Data";
-                }
-            }
-
-            // Populate buttons1 with identifications
-            foreach (Button button in buttons)
-            {
-                if (identifications.Count > 0)
-                {
-                    int randomIndex = random.Next(identifications.Count);
-                    string randomIdentification = identifications[randomIndex];
-                    button.Text = randomIdentification;
-                    identifications.RemoveAt(randomIndex); // Avoid duplicate identifications
-                }
-                else
-                {
-                    // Handle the case where there are not enough identifications
-                    button.Text = "No Data";
-                }
-            }
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Resetting the button colors
+        /// </summary>
+        /// <param name="buttons"></param>
+        private void ResetButtonColors(List<Button> buttons)
+        {
+            buttons.ForEach(button => button.BackColor = SystemColors.Control);
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Assigning data to buttons
+        /// </summary>
+        /// <param name="buttons"></param>
+        /// <param name="data"></param>
+        /// <param name="random"></param>
+        /// <param name="noDataValue"></param>
+        private void AssignRandomDataToButtons(List<Button> buttons, List<string> data, Random random, string noDataValue)
+        {
+            buttons.ForEach(button =>
+            {
+                if (data.Count > 0)
+                {
+                    int randomIndex = random.Next(data.Count);
+                    string randomValue = data[randomIndex];
+                    button.Text = randomValue;
+                    data.RemoveAt(randomIndex);
+                }
+                else
+                {
+                    button.Text = noDataValue;
+                }
+            });
+        }
+        //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         /// <summary>
@@ -476,42 +503,3 @@ namespace DDCLibrary
     }
 }
 //----------------------------------------------------------------------------------ooo000EndOfFile000ooo--------------------------------------------------------------------------------------------
-
-
-
-/*
- * STUFF
- * // private Algorithm al = new Algorithm();
-       // private LinkedList<int> randomGenNmbrs = new LinkedList<int>(); //Linked list to store random generated numbers from worker class
-       // private LinkedList<string> randonGenLetters = new LinkedList<string>(); //Linked list to store random generated letters
-       // private LinkedList<string> identificatorForCallNmbrs = new LinkedList<string>(); //Linked list to store random generated letters
-
-//Using class library 'Algorithms' to nitilising the random gen numbers and letters so they load as soon as the form is up
-            // randomGenNmbrs = al.GenerateCallNumbers(7);
-            // randonGenLetters = al.GenerateRandomLetterSets(7, 3); 
- * //public void PopulateDictionary()
-        //{
-        //    deweyData = new Dictionary<string, string>();
-
-        //    if (randomGenNmbrs.Count == randonGenLetters.Count)
-        //    {
-        //        LinkedListNode<int> numberNode = randomGenNmbrs.First;
-        //        LinkedListNode<string> letterNode = randonGenLetters.First;
-
-        //        while (numberNode != null && letterNode != null)
-        //        {
-        //            string key = numberNode.Value.ToString() +"."+ letterNode.Value;
-        //            string value = "Value" + key; // Set the corresponding value as needed
-
-        //            deweyData.Add(key, value);
-
-        //            numberNode = numberNode.Next;
-        //            letterNode = letterNode.Next;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // Handle the case where the two linked lists have different counts
-        //    }
-        //}
-*/

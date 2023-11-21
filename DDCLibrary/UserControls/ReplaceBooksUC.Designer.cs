@@ -337,15 +337,15 @@
             // btnStop
             // 
             this.btnStop.BackColor = System.Drawing.Color.Transparent;
-            this.btnStop.BackgroundImage = global::DDCLibrary.Properties.Resources.stop__1_;
+            this.btnStop.BackgroundImage = global::DDCLibrary.Properties.Resources.submit;
             this.btnStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnStop.FlatAppearance.BorderSize = 0;
             this.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStop.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnStop.Location = new System.Drawing.Point(317, 493);
+            this.btnStop.Location = new System.Drawing.Point(272, 491);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(82, 66);
+            this.btnStop.Size = new System.Drawing.Size(174, 66);
             this.btnStop.TabIndex = 85;
             this.btnStop.UseVisualStyleBackColor = false;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);

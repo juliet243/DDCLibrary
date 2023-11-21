@@ -54,7 +54,6 @@
             this.btnRewards.Size = new System.Drawing.Size(113, 120);
             this.btnRewards.TabIndex = 74;
             this.btnRewards.UseVisualStyleBackColor = false;
-            this.btnRewards.Visible = false;
             // 
             // button1
             // 
@@ -68,7 +67,6 @@
             this.button1.Size = new System.Drawing.Size(113, 120);
             this.button1.TabIndex = 75;
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Visible = false;
             // 
             // button2
             // 
@@ -82,7 +80,6 @@
             this.button2.Size = new System.Drawing.Size(113, 120);
             this.button2.TabIndex = 76;
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Visible = false;
             // 
             // button3
             // 
@@ -96,7 +93,6 @@
             this.button3.Size = new System.Drawing.Size(113, 120);
             this.button3.TabIndex = 77;
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Visible = false;
             // 
             // button4
             // 
@@ -110,7 +106,6 @@
             this.button4.Size = new System.Drawing.Size(113, 120);
             this.button4.TabIndex = 78;
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.Visible = false;
             // 
             // button5
             // 
@@ -124,7 +119,6 @@
             this.button5.Size = new System.Drawing.Size(113, 120);
             this.button5.TabIndex = 79;
             this.button5.UseVisualStyleBackColor = false;
-            this.button5.Visible = false;
             // 
             // button6
             // 
@@ -138,7 +132,6 @@
             this.button6.Size = new System.Drawing.Size(113, 120);
             this.button6.TabIndex = 80;
             this.button6.UseVisualStyleBackColor = false;
-            this.button6.Visible = false;
             // 
             // button7
             // 
@@ -152,7 +145,6 @@
             this.button7.Size = new System.Drawing.Size(113, 120);
             this.button7.TabIndex = 81;
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Visible = false;
             // 
             // btnShutDown
             // 

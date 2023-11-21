@@ -90,7 +90,7 @@
             // 
             // btnFndCalNmbrs
             // 
-            this.btnFndCalNmbrs.BackgroundImage = global::DDCLibrary.Properties.Resources.personreadingbw1;
+            this.btnFndCalNmbrs.BackgroundImage = global::DDCLibrary.Properties.Resources.personreading;
             this.btnFndCalNmbrs.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnFndCalNmbrs.Enabled = false;
             this.btnFndCalNmbrs.FlatStyle = System.Windows.Forms.FlatStyle.Popup;

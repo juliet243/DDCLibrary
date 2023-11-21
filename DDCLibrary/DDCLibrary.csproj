@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\FindCallNumbers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FindCallNumbers.Designer.cs">
+      <DependentUpon>FindCallNumbers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Badges.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +73,7 @@
     <Compile Include="Forms\IdentifyAreas.Designer.cs">
       <DependentUpon>IdentifyAreas.cs</DependentUpon>
     </Compile>
+    <Compile Include="classes\MyTreeNode.cs" />
     <Compile Include="UserControls\BadgesUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,6 +118,9 @@
       <DependentUpon>ReplaceBooksUC.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\WorkerClass.cs" />
+    <EmbeddedResource Include="Forms\FindCallNumbers.resx">
+      <DependentUpon>FindCallNumbers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Badges.resx">
       <DependentUpon>Badges.cs</DependentUpon>
     </EmbeddedResource>
@@ -258,6 +268,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\helpdata.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scrollnobackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newgamenoback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\submit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
